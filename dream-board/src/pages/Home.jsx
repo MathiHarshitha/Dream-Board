@@ -3,8 +3,7 @@ import { BoardContext } from "../context/BoardContext";
 import NoteItem from "../components/NoteItem";
 
 const Home = () => {
-  const { notes, addNote, deleteNote, updateNotePosition } =
-    useContext(BoardContext);
+  const { notes, addNote, deleteNote, updateNotePosition } = useContext(BoardContext);
   const [noteText, setNoteText] = useState("");
   const [category, setCategory] = useState("General");
   const [search, setSearch] = useState("");
@@ -24,9 +23,8 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 relative overflow-hidden p-6">
       <div className="flex flex-col items-center mb-6">
-        <h1 className="text-5xl font-extrabold text-gray-800 mb-6">
-          Dream Board
-        </h1>
+        <h1 className="text-5xl font-extrabold text-gray-800 mb-6">Dream Board</h1>
+
         <div className="flex gap-3 mb-4">
           <input
             type="text"
@@ -35,6 +33,7 @@ const Home = () => {
             onChange={(e) => setNoteText(e.target.value)}
             className="border rounded-lg px-4 py-2 w-72 shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
+
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -46,6 +45,7 @@ const Home = () => {
             <option>Health</option>
             <option>Personal</option>
           </select>
+
           <button
             onClick={handleAddNote}
             className="bg-purple-600 text-white px-5 py-2 rounded-lg hover:bg-purple-700 transition shadow-md"
@@ -68,7 +68,7 @@ const Home = () => {
           key={note.id}
           note={note}
           onDelete={deleteNote}
-          onDrag={updateNotePosition}
+          onDragEnd={updateNotePosition}
         />
       ))}
     </div>

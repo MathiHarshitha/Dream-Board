@@ -8,7 +8,6 @@ export const BoardProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Save notes automatically
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
@@ -19,7 +18,7 @@ export const BoardProvider = ({ children }) => {
       id: Date.now(),
       text,
       category: category || "General",
-      position: { x: 50, y: 50 },
+      position: { x: 50, y: 50 }, // initial position
     };
     setNotes((prev) => [...prev, newNote]);
   };
