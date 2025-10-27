@@ -1,5 +1,6 @@
 import React from "react";
 import { useDraggable } from "@dnd-kit/core";
+import { motion } from "framer-motion";
 
 const NoteItem = ({ note, onDelete }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -15,15 +16,22 @@ const NoteItem = ({ note, onDelete }) => {
   };
 
   return (
-    <div
+    <motion.div
       ref={setNodeRef}
       {...listeners}
       {...attributes}
       style={style}
       className="bg-white rounded-lg shadow-md p-4 w-64"
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
+      layout
     >
       <div className="flex justify-between items-start">
-        <p className="text-gray-800 whitespace-pre-wrap">{note.text}</p>
+        <div>
+          <p className="text-gray-800 whitespace-pre-wrap">{note.text}</p>
+          <p className="text-sm text-gray-400 mt-1">{note.category}</p>
+        </div>
         <button
           onClick={() => onDelete(note.id)}
           className="text-red-500 font-bold ml-2 hover:text-red-700"
@@ -31,7 +39,7 @@ const NoteItem = ({ note, onDelete }) => {
           ✕
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
