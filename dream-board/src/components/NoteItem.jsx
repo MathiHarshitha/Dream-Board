@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 const NoteItem = ({ note, onDelete, onDragEnd }) => {
+  const [position, setPosition] = useState(note.position);
+
   return (
     <motion.div
       drag
       dragMomentum={false}
-      onDragEnd={(event, info) => {
-        // final position = original position + drag offset
-        onDragEnd(note.id, note.position.x + info.point.x, note.position.y + info.point.y);
+      onDrag={(e, info) => {
+        // Update local state while dragging (smooth follow)
+        setPosition({
+          x: note.position.x + info.delta.x,
+          y: note.position.y + info.delta.y,
+        });
+      }}
+      onDragEnd={() => {
+        // Save the final position to context / localStorage
+        onDragEnd(note.id, position.x, position.y);
       }}
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.05 }}
       style={{
         position: "absolute",
-        left: note.position.x,
-        top: note.position.y,
+        left: position.x,
+        top: position.y,
         zIndex: 10,
       }}
       className="bg-white rounded-xl shadow-lg p-4 w-64 border border-gray-200 cursor-grab"
