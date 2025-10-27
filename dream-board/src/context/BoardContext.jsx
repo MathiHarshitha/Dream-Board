@@ -14,11 +14,12 @@ export const BoardProvider = ({ children }) => {
   }, [notes]);
 
   const addNote = (text, category) => {
+    if (!text) return;
     const newNote = {
       id: Date.now(),
       text,
       category: category || "General",
-      position: { x: 100, y: 100 },
+      position: { x: 50, y: 50 },
     };
     setNotes((prev) => [...prev, newNote]);
   };
