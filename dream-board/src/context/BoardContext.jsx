@@ -4,11 +4,13 @@ export const BoardContext = createContext();
 
 export const BoardProvider = ({ children }) => {
   const [notes, setNotes] = useState(() => {
+    // Load notes with positions from localStorage
     const saved = localStorage.getItem("notes");
     return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
+    // Save all notes with current positions whenever notes change
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
 
@@ -33,6 +35,7 @@ export const BoardProvider = ({ children }) => {
         note.id === id ? { ...note, position: { x, y } } : note
       )
     );
+    // localStorage automatically updates because of useEffect
   };
 
   return (
